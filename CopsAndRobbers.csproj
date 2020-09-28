@@ -44,12 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Citizen.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="Cop.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Regular.cs" />
+    <Compile Include="Citizen.cs" />
     <Compile Include="Robber.cs" />
   </ItemGroup>
   <ItemGroup>

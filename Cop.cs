@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace CopsAndRobbers
 {
-    class Cop : Citizen
+    class Cop : Person
     {
+        public int robbersBusted { get; set; }
         public List<Item> SiezedItems = new List<Item>();
         //public Cop(int x, int y)
-        public Cop(int verticalPosition, int horizontalPosition)
+        public Cop(int verticalPosition, int horizontalPosition, Random rand)
         {
+            robbersBusted = 0;
             HorizontalPosition = horizontalPosition;
             VerticalPosition = verticalPosition;
+            MoveDirection = (Direction)rand.Next(0, Enum.GetValues(typeof(Direction)).Length);
         }
         public void TakeGoodsFromRobber(Robber robber)
         {
