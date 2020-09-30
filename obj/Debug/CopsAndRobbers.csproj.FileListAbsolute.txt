@@ -1,7 +1,0 @@
-D:\.net programmering lektioner\CopsAndRobbers\obj\Debug\CopsAndRobbers.csprojAssemblyReference.cache
-D:\.net programmering lektioner\CopsAndRobbers\obj\Debug\CopsAndRobbers.csproj.CoreCompileInputs.cache
-D:\.net programmering lektioner\CopsAndRobbers\bin\Debug\CopsAndRobbers.exe.config
-D:\.net programmering lektioner\CopsAndRobbers\bin\Debug\CopsAndRobbers.exe
-D:\.net programmering lektioner\CopsAndRobbers\bin\Debug\CopsAndRobbers.pdb
-D:\.net programmering lektioner\CopsAndRobbers\obj\Debug\CopsAndRobbers.exe
-D:\.net programmering lektioner\CopsAndRobbers\obj\Debug\CopsAndRobbers.pdb
