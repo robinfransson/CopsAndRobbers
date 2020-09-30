@@ -8,15 +8,12 @@ namespace CopsAndRobbers
 {
     class Cop : Person
     {
-        public int robbersBusted { get; set; }
+        public int RobbersBusted { get; set; }
         public List<Item> SiezedItems = new List<Item>();
         //public Cop(int x, int y)
-        public Cop(int verticalPosition, int horizontalPosition, Random rand)
+        public Cop(int verticalPosition, int horizontalPosition, Random rand, int id) : base(verticalPosition, horizontalPosition, id, rand)
         {
-            robbersBusted = 0;
-            HorizontalPosition = horizontalPosition;
-            VerticalPosition = verticalPosition;
-            MoveDirection = (Direction)rand.Next(0, Enum.GetValues(typeof(Direction)).Length);
+            RobbersBusted = 0;
         }
         public void TakeGoodsFromRobber(Robber robber)
         {

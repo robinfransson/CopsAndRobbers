@@ -5,25 +5,24 @@ namespace CopsAndRobbers
 {
     class Robber : Person
     {
-        public int timesCaught { get; set; }
-        public int peopleRobbed { get; set; }
+        public int TimesCaught { get; set; }
+        public int PeopleRobbed { get; set; }
+        public int TimeInPrison { get; set; }
         public List<Item> StolenGoods = new List<Item>();
-        public Robber(int verticalPosition, int horizontalPosition, Random rand)
+        public Robber(int verticalPosition, int horizontalPosition, Random rand, int id) : base(verticalPosition, horizontalPosition, id,rand)
         {
-            peopleRobbed = 0;
-            timesCaught = 0;
-            HorizontalPosition = horizontalPosition;
-            VerticalPosition = verticalPosition;
-            MoveDirection = (Direction)rand.Next(0, Enum.GetValues(typeof(Direction)).Length);
+            TimeInPrison = 0;
+            PeopleRobbed = 0;
+            TimesCaught = 0;
         }
-        public void StealFrom(Citizen regular)
+        public void StealFrom(Citizen citizen)
         {
-            if (regular.Belongings.Count != 0) // om invånaren har något ska tjuven stjäla något av det
+            if (citizen.Belongings.Count != 0) // om invånaren har något ska tjuven stjäla något av det
             {
                 Random rand = new Random();
-                int randomItem = rand.Next(0, regular.Belongings.Count);
-                StolenGoods.Add(regular.Belongings[randomItem]);
-                regular.Belongings.RemoveAt(randomItem);
+                int randomItem = rand.Next(0, citizen.Belongings.Count);
+                StolenGoods.Add(citizen.Belongings[randomItem]);
+                citizen.Belongings.RemoveAt(randomItem);
             }
         }
     }

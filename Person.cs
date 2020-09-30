@@ -15,10 +15,19 @@ namespace CopsAndRobbers
             NE,
             NW
         }
+        public int ID { get; set; }
         public Direction MoveDirection { get; set; }
         public int HorizontalPosition { get; set; }
         public int VerticalPosition { get; set; }
 
+        public Person(int verticalPosition, int horizontalPosition, int id, Random rand)
+        {
+
+            MoveDirection = (Direction)rand.Next(0, Enum.GetValues(typeof(Direction)).Length);
+            HorizontalPosition = horizontalPosition;
+            VerticalPosition = verticalPosition;
+            ID = id;
+        }
         public void MoveToNewLocation(Direction MoveDirection)
         {
             switch(MoveDirection)
@@ -68,11 +77,6 @@ namespace CopsAndRobbers
             bool isAtSouthWestWall = isAtSouthWall && isAtEastWall;
             bool isAtSouthEastWall = isAtSouthWall && isAtEastWall;
 
-            // if (this is Robber)
-            // {
-            //     MessageBox.Show($"at Vertical position {VerticalPosition}, Horizonstal position {HorizontalPosition} \nisAtSouthWall: {isAtSouthWall}, isAtNorthWall: {isAtNorthWall} isAtWestWall: {isAtWestWall} isAtEastWall {isAtEastWall}");
-            // }
-
             if (md == Direction.NE && isAtNorthEastWall)
             {
                 HorizontalPosition = 0;
@@ -111,13 +115,24 @@ namespace CopsAndRobbers
             //east wall
             else if ((md == Direction.E || md == Direction.SE || md == Direction.NE) && isAtEastWall)
             {
-                VerticalPosition = 0;
+                HorizontalPosition = 0;
             }
             else
             {
                 MoveToNewLocation(md);
             }
         }
+
+
+
+
+
+
+        //nedanför är min gamla kod, hade missuppfattat hur dom skulle röra sig, koden nedanför gör att dom får en slumpad riktning varje gång
+
+
+
+
         //public void Move(int Height, int Width, Random rand)
         //{
         //    bool isAtSouthWall = VerticalPosition == Height-1;
