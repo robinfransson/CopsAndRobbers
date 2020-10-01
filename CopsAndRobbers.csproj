@@ -44,9 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleFunctions.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="GameField.cs" />
+    <Compile Include="Hiscores.cs" />
+    <Compile Include="Initialize.cs" />
+    <Compile Include="People.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Cop.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="Prison.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Citizen.cs" />

@@ -63,8 +63,10 @@ namespace CopsAndRobbers
                     break;
             }
         }
-        public void Move(int height, int width)
+        public void Move()
           {
+            int height = GameField.GameHeight;
+            int width = GameField.GameWidth;
             Direction md = MoveDirection;
             int maxHorizontalPos = width - 1;
             int maxVerticalPos = height - 1;
