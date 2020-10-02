@@ -15,11 +15,6 @@ namespace CopsAndRobbers
 
             foreach (Citizen citizen in citizens)
             {
-                if (citizens.First().Equals(citizen))
-                {
-                    GameField.AddMarker(citizen.VerticalPosition, citizen.HorizontalPosition, 'H');
-                    ConsoleFunctions.ShowLocations();
-                }
                 bool multipleRobbersCanRobTheSameCitizen = true;
                 if (!citizen.Belongings.Any()) // om inte medborgaren har något på sig kan han inte bli rånad
                 {
@@ -30,6 +25,11 @@ namespace CopsAndRobbers
 
                     foreach (Robber r in robbers)
                     {
+                        if (citizens.First().Equals(citizen))
+                        {
+                            GameField.AddMarker(citizen.VerticalPosition, citizen.HorizontalPosition, 'H');
+                            ConsoleFunctions.ShowLocations();
+                        }
                         r.StealFrom(citizen);
                         r.PeopleRobbed++;
                         robbedCitizens++;
@@ -41,6 +41,11 @@ namespace CopsAndRobbers
                 else
                 {
 
+                    if (citizens.First().Equals(citizen))
+                    {
+                        GameField.AddMarker(citizen.VerticalPosition, citizen.HorizontalPosition, 'H');
+                        ConsoleFunctions.ShowLocations();
+                    }
                     Robber robber = robbers[Initialize.rand.Next(robbers.Count)]; // en slumpad rånare rånar personen
                     robber.StealFrom(citizen);
                     robber.PeopleRobbed++;

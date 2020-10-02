@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,17 +11,18 @@ namespace CopsAndRobbers
 {
     class ConsoleFunctions
     {
-        public static void ResetDrawnGameMap(char[,] gameField)
+        public static void ResetDrawnGameMap()
         {
-            int height = gameField.GetUpperBound(0); // hur hög spelskärmen är
-            int width = gameField.GetUpperBound(1); //hur bred spelskärmen är
+            int height = GameField.GameHeight; // hur hög spelskärmen är
+            int width = GameField.GameWidth; //hur bred spelskärmen är
+
             for (int i = 0; i <= height; i++)
             {
                 for (int j = 0; j <= width; j++)
                 {
-                    if (gameField[i, j] != ' ') // där det inte är ett mellanslag i arrayen ska det i fönstret ersättas med ett mellanslag ( ta bort bokstaven från skärmen)
+                    if (GameField.PlayingField[i, j] != ' ') // där det inte är ett mellanslag i arrayen ska det i fönstret ersättas med ett mellanslag ( ta bort bokstaven från skärmen)
                     {
-                        PrintAtLocation(i, j, ' ');
+                        PrintCharAtLocation(j, i, ' ', 0, GameField.GameHeight + 1);
                     }
                 }
             }
@@ -44,14 +46,14 @@ namespace CopsAndRobbers
                     if (letter != ' ') // om det inte är ett mellanslag ska bokstaven skrivas ut på positionen
                     {
                         // skickar med höjden som användaren i början skrev in för återställa positionen på konsollens markör
-                        PrintAtLocation(verticalLocation, horizontalLocation, letter);
+                        ShowEntityOnScreen(verticalLocation, horizontalLocation, letter);
 
                     }
                 }
             }
             foreach (Robber prisoner in Prison.Jail)
             {
-                PrintAtLocation(prisoner.VerticalPosition, prisoner.HorizontalPosition, 'F');
+                ShowEntityOnScreen(prisoner.VerticalPosition, prisoner.HorizontalPosition, 'F');
             }
 
             Console.SetWindowPosition(0, 0);
@@ -72,7 +74,7 @@ namespace CopsAndRobbers
                 for (int i = 1; i < 4; i++)
                 {
                     char letterBeforeArrow = GameField.PlayingField[vPos, hPos - i]; //tar bort pilen och återställer till det som var innan
-                    PrintAtLocation(vPos, hPos - i, letterBeforeArrow);
+                    PrintCharAtLocation(hPos - i, vPos, letterBeforeArrow, 0, GameField.GameHeight + 1);
                 }
                 Thread.Sleep(1000);
 
@@ -85,7 +87,7 @@ namespace CopsAndRobbers
                 for (int i = 3; i > 0; i--)
                 {
                     char letterBeforeArrow = GameField.PlayingField[vPos, hPos + i];//tar bort pilen och återställer till det som var innan
-                    PrintAtLocation(vPos, hPos + i, letterBeforeArrow);
+                    PrintCharAtLocation(hPos + i,vPos,  letterBeforeArrow, 0, GameField.GameHeight + 1);
                 }
                 Thread.Sleep(1000);
             }
@@ -129,41 +131,124 @@ namespace CopsAndRobbers
                 {
                     char letterToPrint = GameField.PlayingField[i, j];
 
-                    PrintAtLocation(i, j, letterToPrint);
+                    PrintCharAtLocation(j, i, letterToPrint, 0, GameField.GameHeight + 1);
                 }
             }
         }
-
-        static void PrintAtLocation(int vertical, int horizontal, char letter)
+        static ConsoleColor GetEntityColor(char entity)
+        {
+            switch(entity)
+            {
+                case 'P':
+                    return SelectColor(9);
+                case 'F':
+                    return SelectColor(10);
+                case 'R':
+                    return SelectColor(12);
+                case 'I':
+                    return SelectColor(14);
+                case 'H':
+                    return SelectColor(2);
+                case 'A':
+                    return SelectColor(13);
+                default: // default blir vit
+                    return SelectColor(15);
+            }
+        }
+        static void ShowEntityOnScreen(int vertical, int horizontal, char letter)
         { // default location är alltså samma som 2d-arrayens vertikala längd, dvs, den raden längst ner
-            Console.SetCursorPosition(horizontal, vertical);
-            if (letter == 'P') //polis
-            {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-            }
-            else if (letter == 'F') // fånge
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-            }
-            else if (letter == 'R') // rånare
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-            else if (letter == 'H') // någon blir rånad
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-            }
-            else if (letter == 'I') // invånare
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-            }
-            else // arresterad
-            {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-            }
-            Console.Write(letter);
-            Console.SetCursorPosition(0, GameField.GameHeight+1); //återställer inmatningsplats till sista raden
+            Console.ForegroundColor = GetEntityColor(letter);
+            PrintCharAtLocation(horizontal, vertical, letter, 0, GameField.GameHeight + 1);
             Console.ResetColor();
+        }
+
+        //färgar texten som konsollen ska skriva ut
+        /// <summary>
+        /// Colors a string with individual colors\n
+        /// usage: [CX] or [CXX] where XX is a number between 0 to 15 where the colors are as following (if the number provided is higher than 15 it will be set to 15).:
+        /// //färgernas koder
+        ///Black 0 
+        ///DarkBlue 1
+        ///DarkGreen 2
+        ///DarkCyan 3
+        ///DarkRed 4
+        ///DarkMagenta 5
+        ///DarkYellow 6
+        ///Gray 7
+        ///DarkGray 8
+        ///Blue 9
+        ///Green 10
+        ///Cyan 11
+        ///Red 12
+        ///Magenta 13
+        ///Yellow 14
+        ///White 15
+        /// </summary>
+        /// <returns>
+        /// A colored string at the position provided
+        /// </returns>
+        /// <param name="colorThis">String to color</param>
+        /// <param name="horizontalPos">Horizontal position on the screen to start printing at</param>
+        /// <param name="verticalPos">Vertical position on the screen to start printing at</param>
+        public static void ColoredText(string colorThis, int horizontalPos, int verticalPos)
+        {
+            int nextplacement = 0;
+            Regex regex = new Regex(@"(\[[C]\d{1,2}\])"); // regex matchar input strängen i formated [CXX] där XX är siffror
+            string[] split = regex.Split(colorThis); // splittrar strängen där regex hittar en träff
+            for (int i = 0; i < split.Length; i++)
+            {
+                // plussar på den gamla strängens längd så de inte hamnar på samma ställe
+                if (split[i].Contains("["))
+                {
+                    string matchInteger = new Regex(@"\d{1,2}").Match(split[i]).Value; // försöker hitta 1 eller 2 siffror i strängen
+                    bool parseSuccess = Int32.TryParse(matchInteger, out int color); //gör om strängen till en int
+                    if (parseSuccess)
+                    {
+
+                        Console.ForegroundColor = SelectColor(color); // sätter färgen till den valda (eller vit om talet var för högt)
+                    }
+
+                }
+                else
+                {
+
+                    
+                    PrintStringAtLocation(horizontalPos + nextplacement, verticalPos, split[i], 0, GameField.GameHeight + 1);
+                    nextplacement += split[i].Length;// nästa text ska inte hamna över den gamla så vi behöver spara hur lång den förra utskriften var
+                    Console.ResetColor();
+                }
+
+            }
+        }
+
+        public static void PrintCharAtLocation(int horizontalPosition, int verticalPosition, char letterToWrite, int resetCursorPositionLeft, int resetCursorPositionUp)
+        {
+            Console.SetCursorPosition(horizontalPosition, verticalPosition); // sätter inmatningsplats till de angivna koordinaterna
+            Console.Write(letterToWrite);
+            Console.SetCursorPosition(resetCursorPositionLeft, resetCursorPositionUp); //återställer inmatningsplats till den angivna raden+kolumn 
+            Console.ResetColor();
+        }
+        public static void PrintStringAtLocation(int horizontalPosition, int verticalPosition, string textToWrite, int resetCursorPositionLeft, int resetCursorPositionUp)
+        {
+            Console.SetCursorPosition(horizontalPosition, verticalPosition); // sätter inmatningsplats till de angivna koordinaterna
+            Console.Write(textToWrite);
+            Console.SetCursorPosition(resetCursorPositionLeft, resetCursorPositionUp); //återställer inmatningsplats till den angivna raden+kolumn 
+            Console.ResetColor();
+        }
+        /// <summary>
+        /// Returns the ConsoleColor of the number provided
+        /// </summary>
+        /// <param name="color">The color to select from ConsoleColor</param>
+        /// <returns>Returns the ConsoleColor in the enum of ConsoleColor, see Colored text for codes.</returns>
+        public static ConsoleColor SelectColor(int color)
+        {
+            if (color > 15) // det finns bara 15 färger att välja på, har man skrivit högre blir det vitt
+            {
+                color = 15;
+                return (ConsoleColor)color;
+            }
+
+            return (ConsoleColor)color;
         }
     }
 }
