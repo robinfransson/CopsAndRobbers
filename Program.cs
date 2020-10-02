@@ -43,7 +43,7 @@ namespace CopsAndRobbers
                 numberOfRobbersCaught += caught;
                 ConsoleFunctions.PrintInfo(GameField.GameHeight+2, 0, $"Number of Robbers caught: {numberOfRobbersCaught}\n" +
                     $"Number of Citizens robbed: {numberOfRobbedCitizens}, Robbers in prison: {Prison.Prisoners}\n" +
-                    $"Number of robbers not in prison: {People.RobbersIngame}");
+                    $"Number of robbers not in prison: {People.RobbersIngame} ");
                 Thread.Sleep(300);
                 ConsoleFunctions.ResetDrawnGameMap(); // istället för console clear skriver programmet ett " " där det finns en bokstav (mindre flicker)
                 GameField.ResetField(); // nollställer 2d arrayen så de gamla bokstäverna inte skrivs ut igen
