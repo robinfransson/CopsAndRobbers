@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,16 @@ namespace CopsAndRobbers
             {
                 return Jail.Count;
             }
+        }
+
+        public static int NextRelease()
+        {
+            if(Jail.Any())
+            {
+                int prisonerReleaseTimer = Jail.Max(prisoner => prisoner.TimeInPrison);
+                return PrisonTimer - prisonerReleaseTimer;
+            }
+            return 0;
         }
         public static int PrisonTimer { get; set; }
 

@@ -61,32 +61,32 @@ namespace CopsAndRobbers
                 if (i == 0)
                 {
                     ConsoleFunctions.ColoredText("[C10]Most robbed", placeOnRight, i);
-                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {mostRobbed.ID}[C15], score:[C12] {mostRobbed.TimesRobbed}", placeOnRight, i + 1);
+                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {mostRobbed.ID}[C15], score:[C12] {mostRobbed.TimesRobbed}  ", placeOnRight, i + 1);
                 }
                 else if (i == 2)
                 {
                     ConsoleFunctions.ColoredText("[C10]Most robberies", placeOnRight, i);
-                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {mostRobberies.ID}[C15], score:[C12] {mostRobberies.PeopleRobbed}", placeOnRight, i + 1);
+                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {mostRobberies.ID}[C15], score:[C12] {mostRobberies.PeopleRobbed}  ", placeOnRight, i + 1);
                 }
                 else if (i == 4)
                 {
                     ConsoleFunctions.ColoredText("[C10]Most caught", placeOnRight, i);
-                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {mostTimesCaught.ID}[C15], score:[C12] {mostTimesCaught.TimesCaught}", placeOnRight, i + 1);
+                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {mostTimesCaught.ID}[C15], score:[C12] {mostTimesCaught.TimesCaught}  ", placeOnRight, i + 1);
                 }
                 else if (i == 6)
                 {
                     ConsoleFunctions.ColoredText("[C10]Most items [C12](robber)", placeOnRight, i);
-                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {robberMostItems.ID}[C15], score:[C12] {robberMostItems.StolenGoods.Count}", placeOnRight, i + 1);
+                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {robberMostItems.ID}[C15], score:[C12] {robberMostItems.StolenGoods.Count} ", placeOnRight, i + 1);
                 }
                 else if (i == 8)
                 {
                     ConsoleFunctions.ColoredText("[C10]Most items [C9](cop)", placeOnRight, i);
-                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {copMostItems.ID}[C15], score:[C12] {copMostItems.SiezedItems.Count}", placeOnRight, i + 1);
+                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {copMostItems.ID}[C15], score:[C12] {copMostItems.SiezedItems.Count}  ", placeOnRight, i + 1);
                 }
                 else if (i == 10)
                 {
                     ConsoleFunctions.ColoredText("[C10]Most robbers busted", placeOnRight, i);
-                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {mostRobbersBusted.ID}[C15], score:[C12] {mostRobbersBusted.RobbersBusted}", placeOnRight, i + 1);
+                    ConsoleFunctions.ColoredText($"[C6]ID:[C10] {mostRobbersBusted.ID}[C15], score:[C12] {mostRobbersBusted.RobbersBusted}  ", placeOnRight, i + 1);
                 }
                 i += 2; // plussar på med 2, så nästa utskrift hamnar under  id, score (dvs 2 rader under den förra)
             }

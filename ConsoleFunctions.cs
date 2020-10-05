@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace CopsAndRobbers
 {
@@ -74,7 +69,9 @@ namespace CopsAndRobbers
                 for (int i = 1; i < 4; i++)
                 {
                     char letterBeforeArrow = GameField.PlayingField[vPos, hPos - i]; //tar bort pilen och återställer till det som var innan
-                    PrintCharAtLocation(hPos - i, vPos, letterBeforeArrow, 0, GameField.GameHeight + 1);
+                    //PrintCharAtLocation(hPos - i, vPos, letterBeforeArrow, 0, GameField.GameHeight + 1);
+
+                    ShowEntityOnScreen(vPos, hPos - i, letterBeforeArrow);
                 }
                 Thread.Sleep(1000);
 
@@ -87,7 +84,8 @@ namespace CopsAndRobbers
                 for (int i = 3; i > 0; i--)
                 {
                     char letterBeforeArrow = GameField.PlayingField[vPos, hPos + i];//tar bort pilen och återställer till det som var innan
-                    PrintCharAtLocation(hPos + i,vPos,  letterBeforeArrow, 0, GameField.GameHeight + 1);
+                    //PrintCharAtLocation(hPos + i,vPos,  letterBeforeArrow, 0, GameField.GameHeight + 1);
+                    ShowEntityOnScreen(vPos, hPos + i, letterBeforeArrow);
                 }
                 Thread.Sleep(1000);
             }
@@ -132,6 +130,7 @@ namespace CopsAndRobbers
                     char letterToPrint = GameField.PlayingField[i, j];
 
                     PrintCharAtLocation(j, i, letterToPrint, 0, GameField.GameHeight + 1);
+                    ///ShowEntityOnScreen(j, i, letterToPrint); //color the letter that is printed
                 }
             }
         }
